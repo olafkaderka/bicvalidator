@@ -29,8 +29,7 @@ RSpec.describe Bicvalidator do
     expect(bv.sepa_country).to be false
   end
 
-
-   it "BicValidatorTest Land AE ist nicht im Separaum (standmaessig an der test)" do 
+  it "BicValidatorTest Land AE ist nicht im Separaum (standmaessig an der test)" do 
     bv = Bicvalidator::Validate.new({:bic_code  => "GENNAEXS"})
     expect(bv.bic_code).to eq("GENNAEXSXXX")
     expect(bv.errorcode).to eq("BV0004")

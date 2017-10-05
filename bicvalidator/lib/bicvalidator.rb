@@ -34,6 +34,7 @@ module Bicvalidator
 		      @bic_code = @options[:bic_code].blank? ? nil :  @options[:bic_code]
 		      @bic_bankcode = @options[:bic_bankcode].blank? ? nil : @options[:bic_bankcode]
 		      @bic_country = @options[:bic_country].blank? ? nil :  @options[:bic_country]     
+		      
 		      @sepa_country_check = @options[:sepa_country_check]
 
 		      if @bic_code
