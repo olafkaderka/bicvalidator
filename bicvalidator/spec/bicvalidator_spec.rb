@@ -1,6 +1,8 @@
 require "spec_helper"
 require 'bicvalidator'
 
+#https://relishapp.com/rspec/rspec-expectations/v/3-6/docs/built-in-matchers/be-matchers
+
 RSpec.describe Bicvalidator do
 
   it "has a version number" do
