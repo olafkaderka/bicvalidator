@@ -22,7 +22,11 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Konfiguration
+
+* **Bicvalidator.sepa_bic_countries = []**
+  * Liste der Länder dder Laender die zum Separaum gehoeren
+  * Zur Zeit wird dieser Wert standardmaessig gesetzt auf alle Laender gemäß [dieser Liste](https://wiki.xmldation.com/Support/EPC/List_of_SEPA_countries).
 
 ## Development
 
