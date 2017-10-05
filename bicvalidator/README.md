@@ -29,11 +29,12 @@ In den Bics sind mehr Länder als in den IBANS, denn die französischen und engl
 
 ### Instanz Initialisierung
 **Bicvalidator::Validate.new(options={})**
-Das Objekt erwartet nur einen Parameter als hash in dem man die möglichen vorhanden Wert übergeben kann
+
+Das Objekt erwartet nur einen Parameter options als hash in dem man die möglichen vorhanden Wert übergeben kann
 * **:bic_code** String mit dem BicCode
 * **:bic_bankcode** String lokale BLZ des Landes, (Land muss dann auch kommen)
 * **:bic_country** String ISO 3166-1 alpha-2 (2 Stellig)
-* **:sepa_country_check** true/false soll direkt überprüft werden ob das land im Separaum ist. default => true
+* **:sepa_country_check** true/false soll direkt überprüft werden ob das land im Separaum ist. **default => true**
 
 Alle übergeben Werte werden automatsich korrigiert falls möglich (Gross/Klein, Leerzeichen entfernt)
 Das Object hat dann folgende Attribute auf die man zugreifen kann:
