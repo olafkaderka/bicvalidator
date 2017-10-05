@@ -22,10 +22,12 @@ Or install it yourself as:
 
 ## Usage
 
-### Konfigurationsänderung falls gewünscht
-Man kann die standardmaessig vorgegeben Laendercodes die zum Separaum gehören überschreiben
-Zur Zeit wird dieser Wert standardmaessig gesetzt auf alle Laender gemäß [dieser Liste](https://wiki.xmldation.com/Support/EPC/List_of_SEPA_countries).
-In den Bics sind mehr Länder als in den IBANS, denn die franzoesischen und englischen Kolonien haben gemaess BIC einen eigenen Ländercode , in der Iban aber nicht. ["GF","GP","GG","IM","JE","MQ","YT","RE","BL","MF","PM", "PF", "TF", "NC","WF"]
+### Sepa-Ländercodesänderung (falls gewünscht)
+Man kann die standardmäßig vorgegebenen Ländercodes die zum Separaum gehören überschreiben z.b. in einem Rails initializer.
+Zur Zeit wird dieser Wert standardmäßig gesetzt auf alle Länder gemäß [dieser Liste](https://wiki.xmldation.com/Support/EPC/List_of_SEPA_countries).
+
+In den Bics sind mehr Länder als in den IBANS, denn die französischen und englischen Kolonien haben gemaess BIC einen eigenen Ländercode , in der IBAN aber nicht. 
+* ["GF","GP","GG","IM","JE","MQ","YT","RE","BL","MF","PM", "PF", "TF", "NC","WF"] sind die Kolonien
 
 * **Bicvalidator.sepa_bic_countries = []**
 
