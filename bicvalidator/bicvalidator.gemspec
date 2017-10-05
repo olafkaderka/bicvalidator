@@ -6,12 +6,12 @@ require "bicvalidator/version"
 Gem::Specification.new do |spec|
   spec.name          = "bicvalidator"
   spec.version       = Bicvalidator::VERSION
-  spec.authors       = ["TODO: Write your name"]
-  spec.email         = ["TODO: Write your email address"]
+  spec.authors       = ["Olaf Kaderka"]
+  spec.email         = ["okaderka@yahoo.de"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Klasse um BICS auf Konsistenz zur validieren}
+  spec.description   = %q{Jo ist sehr lang}
+  spec.homepage      = "https://github.com/olafkaderka/bicvalidator/"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -33,4 +33,15 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
+
+
+  #for mattr_accessor, reverse_merge
+  spec.add_dependency "activesupport"
+    #laender 
+  #Countries is a collection of all sorts of useful information for every country in the ISO 3166 standard. 
+  #It contains info for the following standards ISO3166-1 (countries),
+  #ISO3166-2 (states/subdivisions), ISO4217 (currency) and E.164 (phone numbers)
+  #https://github.com/hexorx/countries
+  spec.add_dependency "countries" 
+
 end
