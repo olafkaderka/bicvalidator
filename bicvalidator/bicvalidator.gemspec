@@ -37,7 +37,8 @@ Gem::Specification.new do |spec|
 
   #for mattr_accessor, reverse_merge
   spec.add_dependency "activesupport"
-    #laender 
+  
+  #laender 
   #Countries is a collection of all sorts of useful information for every country in the ISO 3166 standard. 
   #It contains info for the following standards ISO3166-1 (countries),
   #ISO3166-2 (states/subdivisions), ISO4217 (currency) and E.164 (phone numbers)
