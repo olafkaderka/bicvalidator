@@ -9,16 +9,12 @@ TODO: Delete this and the text above, and describe your gem
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'bicvalidator'
+gem 'bicvalidator',:git => 'https://github.com/olafkaderka/bicvalidator.git', :branch => 'master'
 ```
 
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install bicvalidator
 
 ## Usage
 
