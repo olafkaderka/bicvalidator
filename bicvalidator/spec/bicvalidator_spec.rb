@@ -14,6 +14,13 @@ RSpec.describe Bicvalidator do
   end
 
 
+  it "BicValidatorTest keine werte" do 
+    bv = Bicvalidator::Validate.new()
+    expect(bv.bic_code).to be_nil
+    expect(bv.sepa_country).to be false
+    expect(bv.errorcode).to eq("BV0000")
+  end
+
   it "BicValidatorTest Fehler keine 8 oder 11 Zeichen" do 
     bv = Bicvalidator::Validate.new({:bic_code  => " GENODEM 1AHL123 "})
     expect(bv.bic_code).to be_nil

@@ -60,6 +60,7 @@ Das Object hat dann folgende Attribute auf die man zugreifen kann:
 
 
 ### Errorcodes
+* "BV0000": keine Werte übergeben
 * "BV0001": bic_code ungültige Länge
 * "BV0002": bic_country ungueltiges Land
 * "BV0003": bic_bankcode Bankcode ohne Land
