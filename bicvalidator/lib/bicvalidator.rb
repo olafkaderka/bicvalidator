@@ -14,7 +14,7 @@ module Bicvalidator
 
 
   	class Validate
-  		attr_accessor :errorcode, :error_messages, :iban_str, :bic_bankcode, :bic_code, :bic_country, :sepa_country_check, :xsa_country_check, :options
+  		attr_accessor :errorcode, :bic_bankcode, :bic_code, :bic_country, :sepa_country_check, :options
 
 	  	def initialize(options={})  
 		      default_options = {
@@ -22,7 +22,7 @@ module Bicvalidator
 		        :bic_bankcode => nil,
 		        :bic_country => nil, 
 		        :sepa_country_check => true,
-		        :xsa_country_check => false        
+ 
 		      }
 		      @options = options.reverse_merge(default_options)
 		      @errorcode = nil

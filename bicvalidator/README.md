@@ -27,10 +27,45 @@ Man kann die standardmäßig vorgegebenen Ländercodes die zum Separaum gehören
 Zur Zeit wird dieser Wert standardmäßig gesetzt auf alle Länder gemäß [dieser Liste](https://wiki.xmldation.com/Support/EPC/List_of_SEPA_countries).
 
 In den Bics sind mehr Länder als in den IBANS, denn die französischen und englischen Kolonien haben gemaess BIC einen eigenen Ländercode , in der IBAN aber nicht. 
-* ["GF","GP","GG","IM","JE","MQ","YT","RE","BL","MF","PM", "PF", "TF", "NC","WF"] sind die Kolonien
+* ["GF","GP","GG","IM","JE","MQ","YT","RE","BL","MF","PM", "PF", "TF", "NC","WF"] sind die Ländercodes der Kolonien.
 
 * **Bicvalidator.sepa_bic_countries = []**
 
+### Instanz Initialisierung
+Das Objekt erwartet nur einen Parameter als hash in dem man die möglichen vorhanden Wert übergeben kann
+* **:bic_code** String mit dem BicCode
+* **:bic_bankcode** String lokale BLZ des Landes, (Land muss dann auch kommen)
+* **:bic_country** String ISO 3166-1 alpha-2 (2 Stellig)
+* **:sepa_country_check** true/false überprüft ob das land im Separaum ist. default => true
+
+Alle übergeben Werte werden automatsich korrigiert falls möglich (Gross/klein, Leerzeichen entfernt)
+
+Das Object liefert folgende attribute zurück:
+* ** :errorcode, :bic_bankcode, :bic_code, :bic_country, :sepa_country_check, :options**
+
+### Beipiele
+* **bv = Bicvalidator::Validate.new({:bic_code  => " GENODEM 1A HL "})**
+* bv.bic_code => "GENODEM1AHL"
+* bv.bic_country => "DE"
+* bv.errorcode => nil
+
+
+* **bv = Bicvalidator::Validate.new({:bic_code  => "GENNAEXS"})**
+* bv.bic_code => "GENNAEXS"
+* bv.bic_country => "AE"
+* bv.errorcode => "BV0004" (nicht im Separaum)
+
+* **bv = Bicvalidator::Validate.new({:bic_code  => "GENNAEXS", :sepa_country_check => false})**
+* bv.bic_code => "GENNAEXS"
+* bv.bic_country => "AE"
+* bv.errorcode => nil
+
+### Eroorcodes
+* "BV0001": BIC ungültige Länge
+* "BV0002": Ungueltiges Land
+* "BV0003": Bankcode ohne Land
+* "BV0004": Kein SEPA Land  
+* "BV0010": bic_bankcode ungültige Länge (nur bei AT/DE)
 
 
 ## Development
