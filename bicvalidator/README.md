@@ -32,32 +32,34 @@ Das Objekt erwartet nur einen Parameter als hash in dem man die möglichen vorha
 * **:bic_code** String mit dem BicCode
 * **:bic_bankcode** String lokale BLZ des Landes, (Land muss dann auch kommen)
 * **:bic_country** String ISO 3166-1 alpha-2 (2 Stellig)
-* **:sepa_country_check** true/false überprüft ob das land im Separaum ist. default => true
+* **:sepa_country_check** true/false soll direkt überprüft werden ob das land im Separaum ist. default => true
 
 Alle übergeben Werte werden automatsich korrigiert falls möglich (Gross/klein, Leerzeichen entfernt)
 
 Das Object liefert folgende attribute zurück:
-* **:errorcode, :bic_bankcode, :bic_code, :bic_country, :sepa_country_check, :options**
+* **:errorcode, :bic_bankcode, :bic_code, :bic_country, :sepa_country**
 
 ### Beipiele
 **bv = Bicvalidator::Validate.new({:bic_code  => " GENODEM 1A HL "})**
   * bv.bic_code => "GENODEM1AHL"
   * bv.bic_country => "DE"
   * bv.errorcode => nil
-
+  * bv.sepa_country => true
 
 **bv = Bicvalidator::Validate.new({:bic_code  => "GENNAEXS"})**
   * bv.bic_code => "GENNAEXS"
   * bv.bic_country => "AE"
   * bv.errorcode => "BV0004" (nicht im Separaum)
+  * bv.sepa_country => false
 
 **bv = Bicvalidator::Validate.new({:bic_code  => "GENNAEXS", :sepa_country_check => false})**
   * bv.bic_code => "GENNAEXS"
   * bv.bic_country => "AE"
   * bv.errorcode => nil
+  * bv.sepa_country => false
 
 
-### Eroorcodes
+### Errorcodes
 * "BV0001": bic_code ungültige Länge
 * "BV0002": bic_country ungueltiges Land
 * "BV0003": bic_bankcode Bankcode ohne Land

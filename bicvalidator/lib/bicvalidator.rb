@@ -14,7 +14,7 @@ module Bicvalidator
 
 
   	class Validate
-  		attr_accessor :errorcode, :bic_bankcode, :bic_code, :bic_country, :sepa_country_check, :options
+  		attr_accessor :errorcode, :bic_bankcode, :bic_code, :bic_country, :sepa_country
 
 	  	def initialize(options={})  
 		      default_options = {
@@ -22,10 +22,10 @@ module Bicvalidator
 		        :bic_bankcode => nil,
 		        :bic_country => nil, 
 		        :sepa_country_check => true,
- 
 		      }
 		      @options = options.reverse_merge(default_options)
 		      @errorcode = nil
+		      @sepa_country = false
 		      self.start_validation
 	  	end
 
@@ -52,6 +52,7 @@ module Bicvalidator
 		          @bic_country = @bic_code[4..5]
 		          #ich uberschreibe einfach das Lnd mit dem BiCCODE
 		        else
+		          @bic_code = nil
 		          @errorcode = "BV0001"
 		          return
 		        end   
@@ -73,7 +74,12 @@ module Bicvalidator
 		          @errorcode = "BV0002" 
 		          return
 		        end
-		        if @sepa_country_check and !Bicvalidator.sepa_bic_countries.include? @bic_country
+
+		        if Bicvalidator.sepa_bic_countries.include? @bic_country
+		        	@sepa_country = true
+		        end
+
+		        if @sepa_country_check and !@sepa_country
 		          @errorcode = "BV0004"
 		          return 
 		        end
