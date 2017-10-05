@@ -37,30 +37,30 @@ Das Objekt erwartet nur einen Parameter als hash in dem man die möglichen vorha
 Alle übergeben Werte werden automatsich korrigiert falls möglich (Gross/klein, Leerzeichen entfernt)
 
 Das Object liefert folgende attribute zurück:
-* ** :errorcode, :bic_bankcode, :bic_code, :bic_country, :sepa_country_check, :options**
+* **:errorcode, :bic_bankcode, :bic_code, :bic_country, :sepa_country_check, :options**
 
 ### Beipiele
-* **bv = Bicvalidator::Validate.new({:bic_code  => " GENODEM 1A HL "})**
-* bv.bic_code => "GENODEM1AHL"
-* bv.bic_country => "DE"
-* bv.errorcode => nil
+**bv = Bicvalidator::Validate.new({:bic_code  => " GENODEM 1A HL "})**
+  * bv.bic_code => "GENODEM1AHL"
+  * bv.bic_country => "DE"
+  * bv.errorcode => nil
 
 
-* **bv = Bicvalidator::Validate.new({:bic_code  => "GENNAEXS"})**
-* bv.bic_code => "GENNAEXS"
-* bv.bic_country => "AE"
-* bv.errorcode => "BV0004" (nicht im Separaum)
+**bv = Bicvalidator::Validate.new({:bic_code  => "GENNAEXS"})**
+  * bv.bic_code => "GENNAEXS"
+  * bv.bic_country => "AE"
+  * bv.errorcode => "BV0004" (nicht im Separaum)
 
-* **bv = Bicvalidator::Validate.new({:bic_code  => "GENNAEXS", :sepa_country_check => false})**
-* bv.bic_code => "GENNAEXS"
-* bv.bic_country => "AE"
-* bv.errorcode => nil
+**bv = Bicvalidator::Validate.new({:bic_code  => "GENNAEXS", :sepa_country_check => false})**
+  * bv.bic_code => "GENNAEXS"
+  * bv.bic_country => "AE"
+  * bv.errorcode => nil
 
 
 ### Eroorcodes
-* "BV0001": BIC ungültige Länge
-* "BV0002": Ungueltiges Land
-* "BV0003": Bankcode ohne Land
+* "BV0001": bic_code ungültige Länge
+* "BV0002": bic_country ungueltiges Land
+* "BV0003": bic_bankcode Bankcode ohne Land
 * "BV0004": Kein SEPA Land  
 * "BV0010": bic_bankcode ungültige Länge (nur bei AT/DE)
 
