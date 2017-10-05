@@ -60,6 +60,7 @@ Das Object liefert folgende attribute zurück:
 * bv.bic_country => "AE"
 * bv.errorcode => nil
 
+
 ### Eroorcodes
 * "BV0001": BIC ungültige Länge
 * "BV0002": Ungueltiges Land
@@ -67,6 +68,9 @@ Das Object liefert folgende attribute zurück:
 * "BV0004": Kein SEPA Land  
 * "BV0010": bic_bankcode ungültige Länge (nur bei AT/DE)
 
+
+### Tests per Rspec
+bundle exec rspec spec
 
 ## Development
 
