@@ -125,10 +125,11 @@ module Bicvalidator
               return 
             end
 
-            return if !["DE","AT"].include? @bic_country
+            return if !["DE","AT","ES"].include? @bic_country
+            
             #kontonummer in DE 8 stellig
             case @bic_country
-            when "DE"
+            when "DE","ES"
               #kontonummer in DE 8 stellig Zahlen
               rule = '^[0-9]{8}$'
             when "AT"
