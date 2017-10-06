@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["okaderka@yahoo.de"]
 
   spec.summary       = %q{Klasse um BICS auf Konsistenz zur validieren}
-  spec.description   = %q{Jo ist sehr lang}
+  spec.description   = %q{prüft den Ländercode und die Zugehörigkeit zum SepaSchema}
   spec.homepage      = "https://github.com/olafkaderka/bicvalidator/"
   spec.license       = "MIT"
 

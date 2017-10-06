@@ -24,6 +24,8 @@ module Bicvalidator
             :sepa_country_check => true,
           }
           @options = options.reverse_merge(default_options)
+
+
           @errorcode = nil
           @sepa_country = false
           self.start_validation
