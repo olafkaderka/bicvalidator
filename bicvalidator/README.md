@@ -1,18 +1,18 @@
 # Bicvalidator
+Mit dem BicValidator kann man eine Validitäsprüfung und Korrektur (Leerzeichen, Groß/Kleinschreibung) von übergebenen BIC werten durchführen um diese zu prüfen bevor man diese weiterverarbeitet.
+Neben der Länge des Codes und den möglichen Ländercodes kann man auch überprüfen ob das Land der BIC (4+5 Stelle) am SepaSchema teilnimmt. 
+Optional kann man den Check auch ausstellen.
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/bicvalidator`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Das muss ins Gemfile:
 
 ```ruby
 gem 'bicvalidator',:git => 'https://github.com/olafkaderka/bicvalidator.git', :branch => 'master'
 ```
 
-And then execute:
+Und dann ausführen:
 
     $ bundle
 
