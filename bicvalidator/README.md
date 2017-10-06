@@ -61,12 +61,17 @@ Das Object hat dann folgende Attribute auf die man zugreifen kann:
 
 
 ### Errorcodes
-* "BV0000": keine Werte übergeben
-* "BV0001": bic_code ungültige Länge
-* "BV0002": bic_country ungueltiges Land
-* "BV0003": bic_bankcode Bankcode ohne Land
-* "BV0004": Kein SEPA Land  
-* "BV0010": bic_bankcode ungültige Länge (nur bei AT/DE)
+
+* "BV0000": BicValidator keine Werte zum überprüfen
+* "BV0010": BIC ungültige Zeichen
+* "BV0011": BIC ungültige Länge
+* "BV0020": BIC Land ungültige Zeichen
+* "BV0021": BIC Land ungültige Länge
+* "BV0025": BIC Land unbekannt
+* "BV0026": BIC Land Kein SEPA Land
+* "BV0030": BIC Bankcode ohne Land
+* "BV0032": BIC Bankcode undgültige Zeichen
+* "BV0040": BIC Bankcode undgültige Länge
 
 
 ### Tests per Rspec

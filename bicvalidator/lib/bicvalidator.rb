@@ -52,29 +52,25 @@ module Bicvalidator
                           #invalid character     
             if (@bic_code =~ /^[A-Z0-9]+$/).nil?
               @bic_code = nil
-              @errorcode = "BV0005"
+              @errorcode = "BV0010"
               return 
             end
 
-
-
-            #eine Bic kann nur 8 oder 11 Stellen haben
+            #muss 8 oder 11 stellen haben
             case @bic_code.length
-            when 8,11
-              @bic_code = "#{@bic_code}XXX" if @bic_code.length == 8 
-              #if @bic_country
-                #rein theretisch koennte man jetzt auch noch pruefen ob das ubergeben LAND uberhaupt passt
-                #aber dann muss aihc das auch erst alles bereinigen ....
-              #else
-                #@bic_country = @bic_code[4..5]
-              #end
-              @bic_country = @bic_code[4..5]
-              #ich uberschreibe einfach das Lnd mit dem BiCCODE
+            when 8
+              #wir furllen immer mit XXX auf 11 Stellen auf 
+              @bic_code = "#{@bic_code}XXX"
+            when 11
+              
             else
               @bic_code = nil
-              @errorcode = "BV0001"
+              @errorcode = "BV0011"
               return
-            end   
+            end
+            #wir setzen bic_country auf die 4+5 Stelle des der BIC
+            @bic_country = @bic_code[4..5]
+
           end    
 
           #egal ob durch biccode gesetzt oder das land ubergeben wurde immer st checkn ob da was geht
@@ -84,13 +80,19 @@ module Bicvalidator
 
             if @bic_country.length != 2
               @bic_country = nil
-              @errorcode = "BV0002" 
+              @errorcode = "BV0020" 
               return
+            end
+            if (@bic_country =~ /^[A-Z]+$/).nil?
+              @bic_country = nil
+              @errorcode = "BV0021"
+              return 
             end
 
             #gibts das land uberhaupt zb wenn ZZ kommt
             if ISO3166::Country.new("#{@bic_country}").nil?
-              @errorcode = "BV0002" 
+              @bic_country = nil
+              @errorcode = "BV0025" 
               return
             end
 
@@ -99,30 +101,42 @@ module Bicvalidator
             end
 
             if @sepa_country_check and !@sepa_country
-              @errorcode = "BV0004"
+              @errorcode = "BV0026"
               return 
             end
 
           end
 
           if @bic_bankcode
+            
             if !@bic_country 
               #bankcode ohne land geht nicht
-              @errorcode = "BV0003" 
+              @errorcode = "BV0030" 
               return
             end
+           
             #strip reicht nicht denn strip entfernt nur leerzeichen vorne und hinten
             @bic_bankcode = self.canonicalize_str(@bic_bankcode)
+
+            if (@bic_bankcode =~ /^[A-Z0-9]+$/).nil?
+              @bic_bankcode = nil
+              @errorcode = "BV0032"
+              return 
+            end
+
+            return if !["DE","AT"].include? @bic_country
+
             charactersize = nil
             #kontonummer in DE 8 stellig
             case @bic_country
             when "DE"
-              charactersize = 8
+              charactersize = 8            
             when "AT"
               charactersize = 5
             end
+
             if charactersize and @bic_bankcode.length != charactersize
-              @errorcode = "BV0010"
+              @errorcode = "BV0040"
               return 
             end
           
