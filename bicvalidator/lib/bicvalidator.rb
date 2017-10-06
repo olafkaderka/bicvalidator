@@ -45,11 +45,19 @@ module Bicvalidator
 
           @sepa_country_check = @options[:sepa_country_check]
 
-
-
           if @bic_code
             #strip reicht nicht denn strip entfernt nur leerzeichen vorne und hinten
-            @bic_code = @bic_code.gsub(/\s+/, "").upcase
+            @bic_code = self.canonicalize_str(@bic_code)
+
+                          #invalid character     
+            if (@bic_code =~ /^[A-Z0-9]+$/).nil?
+              @bic_code = nil
+              @errorcode = "BV0005"
+              return 
+            end
+
+
+
             #eine Bic kann nur 8 oder 11 Stellen haben
             case @bic_code.length
             when 8,11
@@ -72,8 +80,8 @@ module Bicvalidator
           #egal ob durch biccode gesetzt oder das land ubergeben wurde immer st checkn ob da was geht
           if @bic_country
             #strip reicht nicht denn strip entfernt nur leerzeichen vorne und hinten
-            @bic_country = @bic_country.gsub(/\s+/, "").upcase
-            
+            @bic_country = self.canonicalize_str(@bic_country)
+
             if @bic_country.length != 2
               @bic_country = nil
               @errorcode = "BV0002" 
@@ -104,7 +112,7 @@ module Bicvalidator
               return
             end
             #strip reicht nicht denn strip entfernt nur leerzeichen vorne und hinten
-            @bic_bankcode = @bic_bankcode.gsub(/\s+/, "").upcase
+            @bic_bankcode = self.canonicalize_str(@bic_bankcode)
             charactersize = nil
             #kontonummer in DE 8 stellig
             case @bic_country
@@ -123,6 +131,12 @@ module Bicvalidator
 
       end
 
-  end
+
+
+      def canonicalize_str(str)
+        str.strip.gsub(/\s+/, '').upcase
+      end
+
+    end
 
 end

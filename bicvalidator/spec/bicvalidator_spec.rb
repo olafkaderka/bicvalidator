@@ -43,6 +43,14 @@ RSpec.describe Bicvalidator do
     expect(bv.sepa_country).to be false
   end
 
+
+  it "BicValidatorTest unguletige Zeichen" do 
+    bv = Bicvalidator::Validate.new({:bic_code  => "GENÄAEXS"})
+    expect(bv.errorcode).to eq("BV0005")
+    expect(bv.bic_code).to be_nil
+    expect(bv.sepa_country).to be false
+  end
+
   it "BicValidatorTest Land AE ohne Sepa check" do 
     bv = Bicvalidator::Validate.new({:bic_code  => "GENNAEXS", :sepa_country_check => false})
     expect(bv.bic_code).to eq("GENNAEXSXXX")
