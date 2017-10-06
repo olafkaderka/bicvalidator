@@ -82,8 +82,22 @@ RSpec.describe Bicvalidator do
     expect(bv.sepa_country).to be true
   end
 
+  it "BicValidatorTest bankcode DE ungueltige Zeichen" do 
+    bv = Bicvalidator::Validate.new({:bic_bankcode  => "10A3565565", :bic_country => "DE"})
+    expect(bv.errorcode).to eq("BV0040")
+    expect(bv.sepa_country).to be true
+  end
+
+
   it "BicValidatorTest bankcode DE passt nicht von Leanger" do 
     bv = Bicvalidator::Validate.new({:bic_bankcode  => "1023565565", :bic_country => "DE"})
+    expect(bv.errorcode).to eq("BV0040")
+    expect(bv.sepa_country).to be true
+  end
+
+
+  it "BicValidatorTest bankcode AT ungueltige Zeichen" do 
+    bv = Bicvalidator::Validate.new({:bic_bankcode  => "10A56", :bic_country => "AT"})
     expect(bv.errorcode).to eq("BV0040")
     expect(bv.sepa_country).to be true
   end
@@ -94,6 +108,7 @@ RSpec.describe Bicvalidator do
     expect(bv.sepa_country).to be true
   end
 
+  #abe rhier ales okay
 
   it "BicValidatorTest Land AE ohne Sepa check alle skay" do 
     bv = Bicvalidator::Validate.new({:bic_code  => "GENNAEXS", :sepa_country_check => false})

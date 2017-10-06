@@ -118,6 +118,7 @@ module Bicvalidator
             #strip reicht nicht denn strip entfernt nur leerzeichen vorne und hinten
             @bic_bankcode = self.canonicalize_str(@bic_bankcode)
 
+            #es duerfen nur A-Z und 0-9 kommne, keine Sonderzeichen
             if (@bic_bankcode =~ /^[A-Z0-9]+$/).nil?
               @bic_bankcode = nil
               @errorcode = "BV0032"
@@ -125,19 +126,22 @@ module Bicvalidator
             end
 
             return if !["DE","AT"].include? @bic_country
-
-            charactersize = nil
             #kontonummer in DE 8 stellig
             case @bic_country
             when "DE"
-              charactersize = 8            
+              #kontonummer in DE 8 stellig Zahlen
+              rule = '^[0-9]{8}$'
             when "AT"
-              charactersize = 5
+              #kontonummer in AT 5 stellig Zahlen
+              rule = '^[0-9]{5}$'
             end
 
-            if charactersize and @bic_bankcode.length != charactersize
+            if regexp = Regexp.new(rule).match(@bic_bankcode)
+              #hat er gefunden
+            else
+              @bic_bankcode = nil
               @errorcode = "BV0040"
-              return 
+              return
             end
           
           end   

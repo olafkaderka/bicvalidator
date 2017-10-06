@@ -50,7 +50,7 @@ Das Object hat dann folgende Attribute auf die man zugreifen kann:
 **bv = Bicvalidator::Validate.new({:bic_code  => "GENNAEXS"})**
   * bv.bic_code => "GENNAEXS"
   * bv.bic_country => "AE"
-  * bv.errorcode => "BV0004" (nicht im Separaum)
+  * bv.errorcode => "BV0026" (Kein SEPA Land)
   * bv.sepa_country => false
 
 **bv = Bicvalidator::Validate.new({:bic_code  => "GENNAEXS", :sepa_country_check => false})**
@@ -58,6 +58,7 @@ Das Object hat dann folgende Attribute auf die man zugreifen kann:
   * bv.bic_country => "AE"
   * bv.errorcode => nil
   * bv.sepa_country => false
+
 
 
 ### Errorcodes
@@ -70,8 +71,9 @@ Das Object hat dann folgende Attribute auf die man zugreifen kann:
 * "BV0025": BIC Land unbekannt
 * "BV0026": BIC Land Kein SEPA Land
 * "BV0030": BIC Bankcode ohne Land
-* "BV0032": BIC Bankcode undgültige Zeichen
-* "BV0040": BIC Bankcode undgültige Länge
+* "BV0032": BIC Bankcode undgültige Zeichen (allgemein)
+* "BV0040": BIC Bankcode ungültig (länderspezfisch)
+
 
 
 ### Tests per Rspec
