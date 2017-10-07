@@ -9,7 +9,7 @@ Optional kann man den Check auch ausstellen.
 Das muss ins Gemfile:
 
 ```ruby
-gem 'bicvalidator',:git => 'https://github.com/olafkaderka/bicvalidator.git', :branch => 'master'
+gem 'bicvalidator'
 ```
 
 Und dann ausführen:
