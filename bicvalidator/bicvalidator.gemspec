@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
-    spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
+    spec.metadata["allowed_push_host"] = "https://rubygems.org"
   else
     raise "RubyGems 2.0 or newer is required to protect against " \
       "public gem pushes."
@@ -36,14 +36,14 @@ Gem::Specification.new do |spec|
 
 
   #for mattr_accessor, reverse_merge
-  spec.add_dependency "activesupport", '>= 4.0'
+  spec.add_dependency "activesupport", '~> 4.0'
   
   #laender 
   #Countries is a collection of all sorts of useful information for every country in the ISO 3166 standard. 
   #It contains info for the following standards ISO3166-1 (countries),
   #ISO3166-2 (states/subdivisions), ISO4217 (currency) and E.164 (phone numbers)
   #https://github.com/hexorx/countries
-  spec.add_dependency "countries" 
+  spec.add_dependency "countries", '~> 2.1'
 
 
 
