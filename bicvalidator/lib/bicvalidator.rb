@@ -24,8 +24,6 @@ module Bicvalidator
             :sepa_country_check => true,
           }
           @options = options.reverse_merge(default_options)
-
-
           @errorcode = nil
           @sepa_country = false
           self.start_validation
@@ -125,16 +123,16 @@ module Bicvalidator
               return 
             end
 
-            return if !["DE","AT","ES"].include? @bic_country
+            return if !["DE","AT","ES","CH"].include? @bic_country
             
             #kontonummer in DE 8 stellig
             case @bic_country
+            when "AT","CH"
+              #kontonummer in AT 5 stellig Zahlen
+              rule = '^[0-9]{5}$'
             when "DE","ES"
               #kontonummer in DE 8 stellig Zahlen
               rule = '^[0-9]{8}$'
-            when "AT"
-              #kontonummer in AT 5 stellig Zahlen
-              rule = '^[0-9]{5}$'
             end
 
             if regexp = Regexp.new(rule).match(@bic_bankcode)
