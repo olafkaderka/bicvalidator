@@ -1,6 +1,6 @@
 # Bicvalidator
 Mit dem BicValidator wird eine BIC gemäß den [ISO9362)(https://de.wikipedia.org/wiki/ISO_9362) Anforderungen geprüft. Zusätzlich wird übeprüft ob die BIC gemäß dem Ländercode im SEPA Raum ist.
-
+Man kann die checks direkt aufrufen oder als Model.Validator einsetzen
 Inspiriert von [boostify/bic_validation](https://github.com/boostify/bic_validation)
 
 ## Installation
@@ -29,7 +29,7 @@ In den Bics sind mehr Länder als in den IBANS, denn die französischen und engl
 ### Instanz Initialisierung
 **Bicvalidator::Bic.new(string)**
 
-### Beipiele
+### Beipiele Direktcheck
 **bv = Bicvalidator::Bic.new(" GENODEM 1A HL ")**
    
     bv.errorcode => nil
@@ -39,6 +39,12 @@ In den Bics sind mehr Länder als in den IBANS, denn die französischen und engl
     bv.branch) => "AHL"
     bv.sepa_scheme? => true (ist gemäß dem SEPA-Ländercodes im SEPA-Schema Raum, zb CH ist drin, obwohl nicht EU)
     bv.eu? => true
+
+
+### Beipiele ActiveRecord Validator
+* validates :bic, bic_model: true
+* Liefert die übersetzten Erroscodes zurück => z.B. model.errors.messages =>{:bic=>["invalid length"]}
+
 
 ### Errorcodes
 Wenn man genau wissen will , was der Fehler ist kann man mit bv.errorcode den genauen Wert ermitteln
