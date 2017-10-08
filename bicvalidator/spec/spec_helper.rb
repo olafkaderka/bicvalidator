@@ -1,4 +1,3 @@
-require "bundler/setup"
 require "bicvalidator"
 
 RSpec.configure do |config|

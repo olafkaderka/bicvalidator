@@ -33,10 +33,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.15"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
-
+  #A Ruby library for testing your library against different versions of dependencie
+  spec.add_development_dependency 'appraisal'
 
   #for mattr_accessor, reverse_merge
-  spec.add_dependency "activesupport", '>= 4.0'
+  spec.add_dependency "activesupport"
   
   #laender 
   #Countries is a collection of all sorts of useful information for every country in the ISO 3166 standard. 

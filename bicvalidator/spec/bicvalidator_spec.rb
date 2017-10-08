@@ -14,116 +14,82 @@ RSpec.describe Bicvalidator do
   end
 
 
-  it "BicValidatorTest keine werte" do 
-    bv = Bicvalidator::Validate.new()
-    expect(bv.bic_code).to be_nil
-    expect(bv.sepa_country).to be false
-    expect(bv.errorcode).to eq("BV0000")
-  end
-
-  it "BicValidatorTest ungültige Zeichen" do 
-    bv = Bicvalidator::Validate.new({:bic_code  => " GENODEÄ 1AHL123 "})
-    expect(bv.bic_code).to be_nil
-    expect(bv.sepa_country).to be false
+  it "BicValidatorTest Fehler keine 8 oder 11 Zeichen" do 
+    bv = Bicvalidator::Bic.new(" GENODEM 1AHL123 ")
+    expect(bv.bic_code).to eq("GENODEM1AHL123")
+    expect(bv.has_valid_lenght?).to be false
+    expect(bv.valid?).to be false
     expect(bv.errorcode).to eq("BV0010")
   end
 
-  it "BicValidatorTest Fehler keine 8 oder 11 Zeichen" do 
-    bv = Bicvalidator::Validate.new({:bic_code  => " GENODEM 1AHL123 "})
-    expect(bv.bic_code).to be_nil
+  it "BicValidatorTest Formatfehler / Sonderzeichen" do 
+    bv = Bicvalidator::Bic.new("GENOÄ1AH")
+    expect(bv.bic_code).to eq("GENOÄ1AH")
+    expect(bv.has_valid_lenght?).to be true
     expect(bv.errorcode).to eq("BV0011")
-    expect(bv.sepa_country).to be false
+    expect(bv.valid?).to be false
+    expect(bv.has_valid_format?).to be false
   end
 
+  it "BicValidatorTest Country Code" do 
+    bv = Bicvalidator::Bic.new("GENODYM1AHL")
+    expect(bv.bic_code).to eq("GENODYM1AHL")
+    expect(bv.valid?).to be false
+    expect(bv.errorcode).to eq("BV0012")
+  end
+
+
+  it "BicValidatorTest Location Code 01 ungültig" do 
+    bv = Bicvalidator::Bic.new("GENODE01AHL")
+    expect(bv.bic_code).to eq("GENODE01AHL")
+    expect(bv.valid?).to be false
+    expect(bv.bank).to eq "GENO"
+    expect(bv.country).to eq "DE"
+    expect(bv.location).to eq "01"
+    expect(bv.valid_location_code?).to be false  
+    expect(bv.errorcode).to eq("BV0013")
+  end
+
+  it "BicValidatorTest Branche Code 01 ungültig, darf nicht X sein wenn XXX" do 
+    bv = Bicvalidator::Bic.new("GENODEM1XHL")
+    expect(bv.bic_code).to eq("GENODEM1XHL")
+    expect(bv.valid?).to be false
+    expect(bv.bank).to eq "GENO"
+    expect(bv.country).to eq "DE"
+    expect(bv.location).to eq "M1"
+    expect(bv.branch).to eq "XHL"
+    expect(bv.valid_branch_code?).to be false  
+    expect(bv.errorcode).to eq("BV0014")
+  end
+
+  it "BicValidatorTest okay mit xxx" do 
+    bv = Bicvalidator::Bic.new("GENODEM1XXX")
+    expect(bv.errorcode).to be_nil
+    expect(bv.bic_code).to eq("GENODEM1XXX")
+    expect(bv.country).to eq("DE")
+    expect(bv.sepa_scheme?).to be true
+  end
  
-  it "BicValidatorTest country Lange passt nicht" do 
-    bv = Bicvalidator::Validate.new({:bic_bankcode  => "1023565565", :bic_country => "DEZ"})
-    expect(bv.bic_country).to be_nil
-    expect(bv.errorcode).to eq("BV0020")
-    expect(bv.sepa_country).to be false
+  it "BicValidatorTest okay by bic" do 
+    bv = Bicvalidator::Bic.new("GENODEM1AHL")
+    expect(bv.errorcode).to be_nil
+    expect(bv.bic_code).to eq("GENODEM1AHL")
+    expect(bv.country).to eq("DE")
+    expect(bv.sepa_scheme?).to be true
   end
-
-  it "BicValidatorTest country ungueltige zeichen" do 
-    bv = Bicvalidator::Validate.new({:bic_bankcode  => "1023565565", :bic_country => "Dä"})
-    expect(bv.bic_country).to be_nil
-    expect(bv.errorcode).to eq("BV0021")
-    expect(bv.sepa_country).to be false
-  end
-
-
-  it "BicValidatorTest country unbekannt" do 
-    bv = Bicvalidator::Validate.new({:bic_bankcode  => "1023565565", :bic_country => "ZZ"})
-    expect(bv.bic_country).to be_nil
-    expect(bv.errorcode).to eq("BV0025")
-    expect(bv.sepa_country).to be false
-  end
-
 
   it "BicValidatorTest country AE ist nicht im Separaum (standmaessig an der test)" do 
-    bv = Bicvalidator::Validate.new({:bic_code  => "GENNAEXS"})
-    expect(bv.bic_code).to eq("GENNAEXSXXX")
-    expect(bv.errorcode).to eq("BV0026")
-    expect(bv.sepa_country).to be false
+    bv = Bicvalidator::Bic.new("GENNAEXS")
+    expect(bv.bic_code).to eq("GENNAEXS")
+    expect(bv.bank).to eq "GENN"
+    expect(bv.country).to eq "AE"
+    expect(bv.location).to eq "XS"
+    expect(bv.valid_location_code?).to be true   
+    expect(bv.valid?).to be true    
+    expect(bv.sepa_scheme?).to be false
+     expect(bv.errorcode).to be_nil
   end
 
-  it "BicValidatorTest bankcode ohne country" do 
-    bv = Bicvalidator::Validate.new({:bic_bankcode  => "1023565565", :bic_country => ""})
-    expect(bv.bic_country).to be_nil
-    expect(bv.errorcode).to eq("BV0030")
-    expect(bv.sepa_country).to be false
-  end
-
-
-  it "BicValidatorTest bankcode un gueltige zeichen" do 
-    bv = Bicvalidator::Validate.new({:bic_bankcode  => "102Ä565565", :bic_country => "DE"})
-    expect(bv.bic_country).to eq("DE")
-    expect(bv.bic_bankcode).to be_nil
-    expect(bv.errorcode).to eq("BV0032")
-    expect(bv.sepa_country).to be true
-  end
-
-  it "BicValidatorTest bankcode DE ungueltige Zeichen" do 
-    bv = Bicvalidator::Validate.new({:bic_bankcode  => "10A3565565", :bic_country => "DE"})
-    expect(bv.errorcode).to eq("BV0040")
-    expect(bv.sepa_country).to be true
-  end
-
-
-  it "BicValidatorTest bankcode DE passt nicht von Leanger" do 
-    bv = Bicvalidator::Validate.new({:bic_bankcode  => "1023565565", :bic_country => "DE"})
-    expect(bv.errorcode).to eq("BV0040")
-    expect(bv.sepa_country).to be true
-  end
-
-
-  it "BicValidatorTest bankcode AT ungueltige Zeichen" do 
-    bv = Bicvalidator::Validate.new({:bic_bankcode  => "10A56", :bic_country => "AT"})
-    expect(bv.errorcode).to eq("BV0040")
-    expect(bv.sepa_country).to be true
-  end
-
-  it "BicValidatorTest bankcode AT passnit von Leanger" do 
-    bv = Bicvalidator::Validate.new({:bic_bankcode  => "1023", :bic_country => "AT"})
-    expect(bv.errorcode).to eq("BV0040")
-    expect(bv.sepa_country).to be true
-  end
-
-  #abe rhier ales okay
-
-  it "BicValidatorTest Land AE ohne Sepa check alle skay" do 
-    bv = Bicvalidator::Validate.new({:bic_code  => "GENNAEXS", :sepa_country_check => false})
-    expect(bv.bic_code).to eq("GENNAEXSXXX")
-    expect(bv.errorcode).to be_nil
-    expect(bv.sepa_country).to be false
-  end
-
-
-  it "BicValidatorTest okay by bic" do 
-    bv = Bicvalidator::Validate.new({:bic_code  => "GENODEM1AHL"})
-    expect(bv.errorcode).to be_nil
-    expect(bv.sepa_country).to be true
-    expect(bv.bic_code).to eq("GENODEM1AHL")
-  end
 
 
 
