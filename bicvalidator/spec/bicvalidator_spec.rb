@@ -9,8 +9,9 @@ RSpec.describe Bicvalidator do
     expect(Bicvalidator::VERSION).not_to be nil
   end
 
-  it "sepa_bic_countries sind gesetzt" do 
+  it "bic_countries sind gesetzt" do 
     expect(Bicvalidator.sepa_bic_countries).not_to be nil
+    expect(Bicvalidator.eu_countries).not_to be nil
   end
 
 
@@ -77,6 +78,7 @@ RSpec.describe Bicvalidator do
     expect(bv.country).to eq("DE")
     expect(bv.location).to eq("M1")
     expect(bv.branch).to eq("AHL")
+    expect(bv.eu?).to be true
     expect(bv.sepa_scheme?).to be true
   end
 
@@ -89,7 +91,27 @@ RSpec.describe Bicvalidator do
     expect(bv.valid_location_code?).to be true   
     expect(bv.valid?).to be true    
     expect(bv.sepa_scheme?).to be false
-     expect(bv.errorcode).to be_nil
+
+
+
+
+    expect(bv.eu?).to be false
+    expect(bv.non_eu?).to be true
+    expect(bv.errorcode).to be_nil
+  end
+
+  it "BicValidatorTest Schweiz" do 
+    bv = Bicvalidator::Bic.new("KBAGCH22")
+    expect(bv.bic_code).to eq("KBAGCH22")
+    expect(bv.bank).to eq "KBAG"
+    expect(bv.country).to eq "CH"
+    expect(bv.location).to eq "22"
+    expect(bv.valid_location_code?).to be true   
+    expect(bv.valid?).to be true    
+    expect(bv.sepa_scheme?).to be true
+    expect(bv.eu?).to be false
+    expect(bv.non_eu?).to be true
+    expect(bv.errorcode).to be_nil
   end
 
 
