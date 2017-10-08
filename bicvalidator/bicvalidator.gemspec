@@ -39,6 +39,7 @@ Gem::Specification.new do |spec|
   #for mattr_accessor, reverse_merge
   spec.add_dependency "activesupport"
   
+  spec.add_dependency 'activemodel'
   #laender 
   #Countries is a collection of all sorts of useful information for every country in the ISO 3166 standard. 
   #It contains info for the following standards ISO3166-1 (countries),

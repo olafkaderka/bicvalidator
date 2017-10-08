@@ -52,8 +52,8 @@ Wenn man genau wissen will , was der Fehler ist kann man mit bv.errorcode den ge
 rspec
 
 ### Gem Pushing
-gem build bicvalidator.gemspec
-gem push bicvalidator-X.X.X.gem
+* gem build bicvalidator.gemspec
+* gem push bicvalidator-X.X.X.gem
 
 ## Development
 

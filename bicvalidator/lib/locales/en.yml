@@ -1,0 +1,8 @@
+en:
+  errors:
+    messages:
+      "BV0010": invalid length
+      "BV0011": invalid format 
+      "BV0012": invalid country
+      "BV0013": invalid location code
+      "BV0014": invalid branch code

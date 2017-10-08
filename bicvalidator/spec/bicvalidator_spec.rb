@@ -1,5 +1,6 @@
 require "spec_helper"
 require 'bicvalidator'
+require 'bicvalidator/bic_model_validator'
 
 #https://relishapp.com/rspec/rspec-expectations/v/3-6/docs/built-in-matchers/be-matchers
 
@@ -12,6 +13,35 @@ RSpec.describe Bicvalidator do
   it "bic_countries sind gesetzt" do 
     expect(Bicvalidator.sepa_bic_countries).not_to be nil
     expect(Bicvalidator.eu_countries).not_to be nil
+  end
+
+  class Model
+      include ActiveModel::Validations
+      attr_accessor :bic
+      validates :bic, bic_model: true
+      def initialize(bic)
+        @bic = bic
+      end
+  end
+
+  it 'DEUTDEFF is valid' do
+      model = Model.new 'DEUTDEFF'
+      model.valid?
+      expect(model.errors.count).to eq(0)
+    end
+  
+  it 'DXUTDE is invalid' do
+      model = Model.new 'DXUTDE'
+      model.valid?
+      expect(model.errors.count).to eq(1)
+      expect(model.errors.messages).to eq({:bic=>["invalid length"]})
+  end
+
+    it 'GENOÄ1AH is invalid' do
+      model = Model.new 'GENOÄ1AH'
+      model.valid?
+      expect(model.errors.count).to eq(1)
+      expect(model.errors.messages).to eq({:bic=>["invalid format"]})
   end
 
 
