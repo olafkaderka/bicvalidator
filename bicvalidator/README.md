@@ -1,8 +1,7 @@
 # Bicvalidator
-Mit dem BicValidator kann man eine Validitäsprüfung und Korrektur (Leerzeichen, Groß/Kleinschreibung) von übergebenen BIC werten durchführen um diese zu prüfen bevor man diese weiterverarbeitet.
-Neben der Länge des Codes und den möglichen Ländercodes kann man auch überprüfen ob das Land der BIC (4+5 Stelle) am SepaSchema teilnimmt. 
-Optional kann man den Check auch ausstellen.
+Mit dem BicValidator wird eine BIC gemäß den [ISO9362)(https://de.wikipedia.org/wiki/ISO_9362) Anforderungen geprüft. Zusätzlich wird übeprüft ob die BIC gemäß dem Ländercode im SEPA Raum ist.
 
+Inspiriert von [boostify/bic_validation](https://github.com/boostify/bic_validation)
 
 ## Installation
 
@@ -28,62 +27,40 @@ In den Bics sind mehr Länder als in den IBANS, denn die französischen und engl
 * **Bicvalidator.sepa_bic_countries = []**
 
 ### Instanz Initialisierung
-**Bicvalidator::Validate.new(options={})**
-
-Das Objekt erwartet nur einen Parameter options als hash in dem man die möglichen vorhanden Wert übergeben kann
-* **:bic_code** String mit dem BicCode
-* **:bic_bankcode** String lokale BLZ des Landes, (Land muss dann auch kommen)
-* **:bic_country** String ISO 3166-1 alpha-2 (2 Stellig)
-* **:sepa_country_check** true/false soll direkt überprüft werden ob das land im Separaum ist. **default => true**
-
-Alle übergeben Werte werden automatsich korrigiert falls möglich (Gross/Klein, Leerzeichen entfernt)
-Das Object hat dann folgende Attribute auf die man zugreifen kann:
-* **:errorcode, :bic_bankcode, :bic_code, :bic_country, :sepa_country**
+**Bicvalidator::Bic.new(string)**
 
 ### Beipiele
-**bv = Bicvalidator::Validate.new({:bic_code  => " GENODEM 1A HL "})**
-  * bv.bic_code => "GENODEM1AHL"
-  * bv.bic_country => "DE"
-  * bv.errorcode => nil
-  * bv.sepa_country => true
-
-**bv = Bicvalidator::Validate.new({:bic_code  => "GENNAEXS"})**
-  * bv.bic_code => "GENNAEXS"
-  * bv.bic_country => "AE"
-  * bv.errorcode => "BV0026" (Kein SEPA Land)
-  * bv.sepa_country => false
-
-**bv = Bicvalidator::Validate.new({:bic_code  => "GENNAEXS", :sepa_country_check => false})**
-  * bv.bic_code => "GENNAEXS"
-  * bv.bic_country => "AE"
-  * bv.errorcode => nil
-  * bv.sepa_country => false
-
+**bv = Bicvalidator::Bic.new(" GENODEM 1A HL ")**
+   
+    bv.errorcode => nil
+    bv.bic_code => GENODEM1AHL"
+    bv.country => "DE"
+    bv.location) => "M1"
+    bv.branch) => "AHL"
+    bv.sepa_scheme? => true (ist gemäß dem SEPA-Ländercodes im SEPA-Schema Raum)
 
 
 ### Errorcodes
-
-* "BV0000": BicValidator keine Werte zum überprüfen
-* "BV0010": BIC ungültige Zeichen
-* "BV0011": BIC ungültige Länge
-* "BV0020": BIC Land ungültige Zeichen
-* "BV0021": BIC Land ungültige Länge
-* "BV0025": BIC Land unbekannt
-* "BV0026": BIC Land Kein SEPA Land
-* "BV0030": BIC Bankcode ohne Land
-* "BV0032": BIC Bankcode undgültige Zeichen (allgemein)
-* "BV0040": BIC Bankcode ungültig (länderspezfisch)
-
-
+Wen man genau wissen will , was der Fehler ist kann man mit bv.errorcode den genauen Wert ermitteln
+"BV0010" if !has_valid_lenght?
+"BV0011" if !has_valid_format?
+"BV0012" if !valid_country_code?
+"BV0013" if !valid_location_code?
+"BV0014" if !valid_branch_code?
 
 ### Tests per Rspec
-bundle exec rspec spec
+rspec
+
+### Gem Pushing
+gem build bicvalidator.gemspec
+gem push bicvalidator-X.X.X.gem
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rspec` to run the tests. 
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+
 
 ## Contributing
 
@@ -93,6 +70,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/olafka
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
 
-## Code of Conduct
-
-Everyone interacting in the Bicvalidator project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/olafkaderka/bicvalidator/blob/master/CODE_OF_CONDUCT.md).

@@ -75,6 +75,8 @@ RSpec.describe Bicvalidator do
     expect(bv.errorcode).to be_nil
     expect(bv.bic_code).to eq("GENODEM1AHL")
     expect(bv.country).to eq("DE")
+    expect(bv.location).to eq("M1")
+    expect(bv.branch).to eq("AHL")
     expect(bv.sepa_scheme?).to be true
   end
 
