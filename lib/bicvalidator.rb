@@ -5,8 +5,8 @@ require 'active_support/core_ext'
 #brauch ich fuer laendercodes ISO3166::Country
 require 'countries'
 
-require_relative "bicvalidator/bic"
-require_relative 'bicvalidator/bic_model_validator'
+require "bicvalidator/bic"
+require 'bicvalidator/bic_model_validator'
 
 
 module Bicvalidator 
