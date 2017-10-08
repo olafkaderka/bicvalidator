@@ -37,16 +37,16 @@ In den Bics sind mehr Länder als in den IBANS, denn die französischen und engl
     bv.country => "DE"
     bv.location) => "M1"
     bv.branch) => "AHL"
-    bv.sepa_scheme? => true (ist gemäß dem SEPA-Ländercodes im SEPA-Schema Raum)
-
+    bv.sepa_scheme? => true (ist gemäß dem SEPA-Ländercodes im SEPA-Schema Raum, zb CH ist drin, obwohl nicht EU)
+    bv.eu? => true
 
 ### Errorcodes
-Wen man genau wissen will , was der Fehler ist kann man mit bv.errorcode den genauen Wert ermitteln
-"BV0010" if !has_valid_lenght?
-"BV0011" if !has_valid_format?
-"BV0012" if !valid_country_code?
-"BV0013" if !valid_location_code?
-"BV0014" if !valid_branch_code?
+Wenn man genau wissen will , was der Fehler ist kann man mit bv.errorcode den genauen Wert ermitteln
+* "BV0010" if !has_valid_lenght?
+* "BV0011" if !has_valid_format?
+* "BV0012" if !valid_country_code?
+* "BV0013" if !valid_location_code?
+* "BV0014" if !valid_branch_code?
 
 ### Tests per Rspec
 rspec
